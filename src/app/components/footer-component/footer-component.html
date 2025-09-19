@@ -1,0 +1,45 @@
+<footer class="container">
+  <div
+    class="py-3 border-top d-flex flex-column flex-md-row align-items-center justify-content-between"
+  >
+    <a
+      class="fw-bold text-primary text-decoration-none mb-2 mb-md-0"
+      routerLink="/"
+    >
+      <i class="bi bi-book-half me-2"></i>BookStore
+    </a>
+
+    <ul class="navbar-nav d-flex flex-row mb-2 mb-md-0">
+      <li class="nav-item">
+        <a
+          class="nav-link d-flex align-items-center"
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+        >
+          <i class="bi bi-house-door me-1"></i> Home
+        </a>
+      </li>
+      <li class="nav-item ms-3">
+        <a
+          class="nav-link d-flex align-items-center"
+          routerLink="/search"
+          routerLinkActive="active"
+        >
+          <i class="bi bi-search me-1"></i> Search
+        </a>
+      </li>
+      <li class="nav-item ms-3">
+        <a
+          class="nav-link d-flex align-items-center"
+          routerLink="/contact"
+          routerLinkActive="active"
+        >
+          <i class="bi bi-envelope me-1"></i> Contact
+        </a>
+      </li>
+    </ul>
+
+    <small class="text-muted mt-2 mt-md-0">© BookStore</small>
+  </div>
+</footer>
