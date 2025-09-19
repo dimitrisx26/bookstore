@@ -1,7 +1,10 @@
-<nav class="navbar navbar-expand-lg shadow rounded-bottom mb-4 container">
-  <div class="container-fluid">
-    <a class="navbar-brand fw-bold text-primary" routerLink="/">
-      <i class="bi bi-book-half me-2"></i>BookStore
+<nav class="navbar navbar-expand-lg container shadow py-2">
+  <div class="container">
+    <a
+      class="navbar-brand fw-bold text-primary d-inline-flex align-items-center gap-2"
+      routerLink="/"
+    >
+      <i class="bi bi-book-half"></i><span class="ms-1">BookStore</span>
     </a>
     <button
       class="navbar-toggler"
@@ -15,33 +18,33 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ms-auto">
+      <ul class="navbar-nav ms-lg-auto gap-2 align-items-center">
         <li class="nav-item">
           <a
-            class="nav-link d-flex align-items-center"
+            class="nav-link d-inline-flex align-items-center px-3 py-1 gap-1"
             routerLink="/"
             routerLinkActive="active"
             [routerLinkActiveOptions]="{ exact: true }"
           >
-            <i class="bi bi-house-door me-1"></i> Home
+            <i class="bi bi-house-door"></i><span class="ms-1">Home</span>
           </a>
         </li>
         <li class="nav-item">
           <a
-            class="nav-link d-flex align-items-center"
+            class="nav-link d-inline-flex align-items-center px-3 py-1 gap-1"
             routerLink="/search"
             routerLinkActive="active"
           >
-            <i class="bi bi-search me-1"></i> Search
+            <i class="bi bi-search"></i><span class="ms-1">Search</span>
           </a>
         </li>
         <li class="nav-item">
           <a
-            class="nav-link d-flex align-items-center"
+            class="nav-link d-inline-flex align-items-center px-3 py-1 gap-1"
             routerLink="/contact"
             routerLinkActive="active"
           >
-            <i class="bi bi-envelope me-1"></i> Contact
+            <i class="bi bi-envelope"></i><span class="ms-1">Contact</span>
           </a>
         </li>
       </ul>

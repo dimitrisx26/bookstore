@@ -1,3 +1,11 @@
-<app-header-component></app-header-component>
-<router-outlet></router-outlet>
-<app-footer-component></app-footer-component>
+<div class="fixed-top" style="z-index: 1030">
+  <app-header-component></app-header-component>
+</div>
+
+<main style="padding-top: 64px; padding-bottom: 64px">
+  <router-outlet></router-outlet>
+</main>
+
+<div class="fixed-bottom w-100" style="z-index: 1030">
+  <app-footer-component></app-footer-component>
+</div>
