@@ -1,0 +1,70 @@
+.search-container {
+  position: relative;
+}
+
+.search-input {
+  height: 50px;
+  border-radius: 30px;
+  padding-left: 35px;
+  border: none;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+}
+
+.search-icon {
+  position: absolute;
+  top: 50%;
+  left: 15px;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.book-card {
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.book-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+}
+
+.ratio img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+  padding: 0.5rem;
+}
+
+.book-card .ratio img {
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.book-card:hover .ratio img {
+  transform: none;
+}
+
+.book-card .card-body {
+  padding: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.book-card .badge {
+  font-size: 0.72rem;
+  padding: 0.25rem 0.5rem;
+}
+
+.rating {
+  font-size: 1rem;
+  color: #2c3e50;
+  display: inline-flex;
+  gap: 0.125rem;
+}

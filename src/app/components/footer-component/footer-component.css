@@ -1,7 +1,8 @@
 footer {
   background: #f8f9fa;
   font-size: 0.95rem;
-  z-index: 1040; /* ensure footer sits above page content when fixed */
+  z-index: 1040;
+  width: 100%;
 }
 
 footer .border-top,

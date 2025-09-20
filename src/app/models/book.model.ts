@@ -2,7 +2,7 @@
  * Book model interface
  */
 
-export interface Book {
+export interface IBook {
   /**
    * Unique identifier for the book.
    */
@@ -46,6 +46,11 @@ export interface Book {
   /**
    * URL to a thumbnail or cover image.
    */
+  imageUrl?: string;
+
+  /**
+   * Website URL.
+   */
   website?: string;
 
   /**
@@ -56,7 +61,7 @@ export interface Book {
   /**
    * Average user rating (e.g. 0.0 - 5.0).
    */
-  averageRating?: number;
+  averageRating: number;
 
   /**
    * Year of publication.
