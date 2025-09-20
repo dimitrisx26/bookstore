@@ -19,6 +19,11 @@ export class BooksSearchService {
   private books: WritableSignal<IBook[]> = signal<IBook[]>([]);
 
   /**
+   * Holds the filtered books based on the search query.
+   */
+  private filteredBooks: WritableSignal<IBook[]> = signal<IBook[]>([]);
+
+  /**
    * Loading state signal.
    */
   private isLoading: WritableSignal<boolean> = signal(false);
@@ -47,6 +52,8 @@ export class BooksSearchService {
     this.api.getBooks().subscribe({
       next: (books: IBook[]) => {
         this.books.set(books);
+        this.filteredBooks.set(books);
+
         this.isLoading.set(false);
       },
       error: (err: Error) => {
@@ -57,10 +64,41 @@ export class BooksSearchService {
   }
 
   /**
-   * Get read-only signal of the current list of books.
+   * Search books based on the query.
    */
-  getBooksSignal(): Signal<IBook[]> {
-    return this.books.asReadonly() as Signal<IBook[]>;
+  searchBooks(query: string): void {
+    const normalized = (query ?? '').trim().toLowerCase();
+
+    if (!normalized) {
+      this.filteredBooks.set(this.books())
+      return;
+    }
+
+    const filtered = this.books()
+      .filter((book) => {
+        const title = (book.title ?? '').toLowerCase();
+        const isbn10 = (book.isbn10 ?? '').toLowerCase();
+        const isbn13 = (book.isbn13 ?? '').toLowerCase();
+        const authors = book.authors ?? [];
+
+        const inTitle = title.includes(normalized);
+        const inAuthors = authors.some((author) =>
+          (author ?? '').toLowerCase().includes(normalized)
+        );
+        const inIsbn10 = isbn10.includes(normalized);
+        const inIsbn13 = isbn13.includes(normalized);
+
+        return inTitle || inAuthors || inIsbn10 || inIsbn13;
+      });
+
+    this.filteredBooks.set(filtered);
+  }
+
+  /**
+   * Get read-only signal of the filtered list of books.
+   */
+  getFilteredBooksSignal(): Signal<IBook[]> {
+    return this.filteredBooks.asReadonly() as Signal<IBook[]>;
   }
 
   /**

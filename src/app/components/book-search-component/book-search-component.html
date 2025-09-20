@@ -14,6 +14,7 @@
           type="text"
           class="form-control search-input"
           placeholder="Search..."
+          (input)="onSearch($event.target.value)"
         />
         <i class="bi bi-search search-icon"></i>
       </div>
@@ -138,7 +139,7 @@
                       class="badge bg-light text-dark border rounded-pill py-1 px-2"
                       title="Average rating"
                     >
-                      <span class="fw-semibold small">{{ book.averageRating }}</span>
+                      <span class="fw-semibold small">{{ book.averageRating || '-' }}</span>
                     </div>
                   </div>
                   <!-- END Rating and average -->

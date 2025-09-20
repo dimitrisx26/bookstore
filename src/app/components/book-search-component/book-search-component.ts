@@ -17,10 +17,17 @@ export class BookSearchComponent {
   /**
    * Signal of the list of books returned from the search service.
    */
-  readonly books: Signal<IBook[]> = this.search.getBooksSignal();
+  readonly books: Signal<IBook[]> = this.search.getFilteredBooksSignal();
 
   /**
    * Loading state signal from the service.
    */
   readonly loading: Signal<boolean> = this.search.getLoadingSignal();
+  
+  /**
+   * Search books based on the query.
+   */
+  onSearch(query: string): void {    
+    this.search.searchBooks(query);
+  }
 }

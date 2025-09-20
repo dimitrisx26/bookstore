@@ -16,47 +16,47 @@ export interface IBook {
   /**
    * Optional subtitle.
    */
-  subtitle?: string;
+  subtitle: string;
 
   /**
    * One or more authors.
    */
-  authors?: string[];
+  authors: string[];
 
   /**
    * Date published.
    */
-  published?: string;
+  published: string;
 
   /**
    * Publisher name.
    */
-  publisher?: string;
+  publisher: string;
 
   /**
    * Number of pages.
    */
-  pages?: number;
+  pages: number;
 
   /**
    * Short/long description or summary.
    */
-  description?: string;
+  description: string;
 
   /**
    * URL to a thumbnail or cover image.
    */
-  imageUrl?: string;
+  imageUrl: string;
 
   /**
    * Website URL.
    */
-  website?: string;
+  website: string;
 
   /**
    * Categories or genres assigned to the book.
    */
-  categories?: string[];
+  categories: string[];
 
   /**
    * Average user rating (e.g. 0.0 - 5.0).
@@ -66,11 +66,11 @@ export interface IBook {
   /**
    * Year of publication.
    */
-  year?: number;
+  year: number;
 
   /**
    * Common identifiers.
    */
-  isbn10?: string;
-  isbn13?: string;
+  isbn10: string;
+  isbn13: string;
 }
