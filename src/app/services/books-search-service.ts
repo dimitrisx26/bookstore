@@ -40,6 +40,13 @@ export class BooksSearchService {
   private hasFilter: WritableSignal<boolean> = signal(false);
 
   /**
+   * Dynamic filter option lists.
+   */
+  private categories: WritableSignal<string[]> = signal<string[]>([]);
+  private years: WritableSignal<number[]> = signal<number[]>([]);
+  private publishers: WritableSignal<string[]> = signal<string[]>([]);
+
+  /**
    * Current active filter type and value.
    */
   private activeFilters: WritableSignal<Map<FilterType, string>> = signal(new Map<FilterType, string>());
@@ -78,6 +85,37 @@ export class BooksSearchService {
     }
 
     this.filteredBooks.set(result);
+  });
+
+  /**
+   * Effect to compute dynamic filter option lists whenever the loaded books change.
+   */
+  private computeFilterOptionsEffect = effect(() => {
+    const allBooks = this.books();
+
+    const booksCategories = new Set<string>();
+    const booksYears = new Set<number>();
+    const booksPublishers = new Set<string>();
+
+    allBooks.forEach((book) => {
+      (book.categories ?? []).forEach((c) => { if (c) booksCategories.add(c); });
+
+      const yearPublished = Number(book.year ?? 0);
+
+      if (!Number.isNaN(yearPublished) && yearPublished > 0) {
+        booksYears.add(yearPublished);
+      };
+
+      const publisher = (book.publisher ?? '').trim();
+      if (publisher) {
+        booksPublishers.add(publisher);
+      };
+
+    });
+
+    this.categories.set(Array.from(booksCategories).sort((a, b) => a.localeCompare(b)));
+    this.years.set(Array.from(booksYears).sort((a, b) => a - b));
+    this.publishers.set(Array.from(booksPublishers).sort((a, b) => a.localeCompare(b)));
   });
 
   /**
@@ -122,15 +160,9 @@ export class BooksSearchService {
 
       case 'year': {
         const year = parseInt(filterValue, 10);
-        const publishedDate = book.year ?? 0;
-        const match = publishedDate.toString().match(/\d{4}/);
+        const yearPublished = Number(book.year ?? 0);
 
-        if (match) {
-          const bookYear = parseInt(match[0], 10);
-          return bookYear === year;
-        }
-
-        return false;
+        return !Number.isNaN(year) && yearPublished === year;
       }
 
       case 'publisher': {
@@ -250,5 +282,20 @@ export class BooksSearchService {
    */
   getErrorSignal(): Signal<Error | null> {
     return this.error.asReadonly() as Signal<Error | null>;
+  }
+
+  /**
+   * Read-only signals exposing available filter options.
+   */
+  getCategoriesSignal(): Signal<string[]> {
+    return this.categories.asReadonly() as Signal<string[]>;
+  }
+
+  getYearsSignal(): Signal<number[]> {
+    return this.years.asReadonly() as Signal<number[]>;
+  }
+
+  getPublishersSignal(): Signal<string[]> {
+    return this.publishers.asReadonly() as Signal<string[]>;
   }
 }

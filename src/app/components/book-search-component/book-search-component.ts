@@ -27,6 +27,14 @@ export class BookSearchComponent {
   readonly loading: Signal<boolean> = this.search.getLoadingSignal();
 
   /**
+   * Select filters options signals.
+   */
+  readonly categories: Signal<string[]> = this.search.getCategoriesSignal();
+  readonly years: Signal<number[]> = this.search.getYearsSignal()
+  readonly publishers: Signal<string[]> = this.search.getPublishersSignal()
+
+
+  /**
    * Filter change handler.
    * @param type The type of filter (e.g., 'category', 'year', 'publisher', 'rating').
    * @param value The value of the filter.
