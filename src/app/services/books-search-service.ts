@@ -35,6 +35,125 @@ export class BooksSearchService {
   private error: WritableSignal<Error | null> = signal<Error | null>(null);
 
   /**
+   * Indicates if there is an active filter.
+   */
+  private hasFilter: WritableSignal<boolean> = signal(false);
+
+  /**
+   * Current active filter type and value.
+   */
+  private activeFilters: WritableSignal<Map<FilterType, string>> = signal(new Map<FilterType, string>());
+
+  /**
+   * Indicates if there is an active search query.
+   */
+  private hasQuery: WritableSignal<boolean> = signal(false);
+
+  /**
+   * Last search query string.
+   */
+  private lastQuery: WritableSignal<string> = signal('');
+
+  /**
+   * Effect that rebuilds filteredBooks whenever books, the last query or the active filter change.
+   */
+  private rebuildFilteredBooksEffect = effect(() => {
+    // signals to make the effect track updates
+    const allBooks = this.books();
+    const queryActive = this.hasQuery();
+    const query = this.lastQuery();
+    const filterActive = this.hasFilter();
+    const filters = this.activeFilters();
+
+    let result = allBooks;
+
+    // Apply query if active.
+    if (queryActive && query) {
+      result = result.filter((book) => this.bookMatchesQuery(book, query));
+    }
+
+    // Apply all active filters.
+    if (filterActive && filters && filters.size > 0) {
+      result = this.applyFiltersToBooks(result, filters);
+    }
+
+    this.filteredBooks.set(result);
+  });
+
+  /**
+   * Returns true if the book matches the normalized query string.
+   */
+  private bookMatchesQuery(book: IBook, normalized: string): boolean {
+    const title = (book.title ?? '').toLowerCase();
+    const isbn10 = (book.isbn10 ?? '').toLowerCase();
+    const isbn13 = (book.isbn13 ?? '').toLowerCase();
+    const authors = book.authors ?? [];
+
+    const inTitle = title.includes(normalized);
+    const inAuthors = authors.some((author) => (author ?? '').toLowerCase().includes(normalized));
+    const inIsbn10 = isbn10.includes(normalized);
+    const inIsbn13 = isbn13.includes(normalized);
+
+    return inTitle || inAuthors || inIsbn10 || inIsbn13;
+  }
+
+  /**
+   * Apply all filters from the map to the provided book array and return the filtered array.
+   */
+  private applyFiltersToBooks(books: IBook[], filters: Map<FilterType, string>): IBook[] {
+    let result = books;
+
+    filters.forEach((filterValue, filterType) => {
+      result = result.filter((book) => this.applySingleFilter(book, filterType, filterValue));
+    });
+
+    return result;
+  }
+
+  /**
+   * Apply a single filter to a book and return true if the book passes the filter.
+   */
+  private applySingleFilter(book: IBook, filterType: FilterType, filterValue: string): boolean {
+    switch (filterType) {
+      case 'category': {
+        const categories = book.categories ?? [];
+        return categories.includes(filterValue);
+      }
+
+      case 'year': {
+        const year = parseInt(filterValue, 10);
+        const publishedDate = book.year ?? 0;
+        const match = publishedDate.toString().match(/\d{4}/);
+
+        if (match) {
+          const bookYear = parseInt(match[0], 10);
+          return bookYear === year;
+        }
+
+        return false;
+      }
+
+      case 'publisher': {
+        const publisher = (book.publisher ?? '').toLowerCase();
+        return publisher === filterValue.toLowerCase();
+      }
+
+      case 'rating': {
+        const target = Number.parseInt(filterValue, 10);
+
+        if (Number.isNaN(target)) {
+          return true;
+        }
+
+        return Math.max(0, Math.min(5, Math.floor(book.averageRating ?? 0))) >= target;
+      }
+
+      default:
+        return true;
+    }
+  }
+
+  /**
    * Books API service instance.
    */
   private api = inject(BooksApiService);
@@ -70,29 +189,8 @@ export class BooksSearchService {
   searchBooks(query: string): void {
     const normalized = (query ?? '').trim().toLowerCase();
 
-    if (!normalized) {
-      this.filteredBooks.set(this.books())
-      return;
-    }
-
-    const filtered = this.books()
-      .filter((book) => {
-        const title = (book.title ?? '').toLowerCase();
-        const isbn10 = (book.isbn10 ?? '').toLowerCase();
-        const isbn13 = (book.isbn13 ?? '').toLowerCase();
-        const authors = book.authors ?? [];
-
-        const inTitle = title.includes(normalized);
-        const inAuthors = authors.some((author) =>
-          (author ?? '').toLowerCase().includes(normalized)
-        );
-        const inIsbn10 = isbn10.includes(normalized);
-        const inIsbn13 = isbn13.includes(normalized);
-
-        return inTitle || inAuthors || inIsbn10 || inIsbn13;
-      });
-
-    this.filteredBooks.set(filtered);
+    this.hasQuery.set(normalized.length > 0);
+    this.lastQuery.set(normalized);
   }
 
   /**
@@ -102,73 +200,35 @@ export class BooksSearchService {
    * @param value The value of the filter
    */
   applyFilter(type: FilterType, value: string): void {
+    const current = new Map(this.activeFilters());
+
     if (value === 'all') {
-      this.filteredBooks.set(this.books());
-      return;
+      current.delete(type);
+    } else {
+      current.set(type, value);
     }
 
-    switch (type) {
-      case 'category':
-        const filteredByCategory = this.books()
-          .filter((book) => {
-            const categories = book.categories ?? [];
-            return categories.includes(value);
-          });
+    this.activeFilters.set(current);
+    this.hasFilter.set(current.size > 0);
+  }
 
-        this.filteredBooks.set(filteredByCategory);
-
-        break;
-
-      case 'year':
-        const year = parseInt(value, 10);
-
-        const filteredByYear = this.books()
-          .filter((book) => {
-            const publishedDate = book.year ?? 0;
-            const match = publishedDate.toString().match(/\d{4}/);
-            if (match) {
-              const bookYear = parseInt(match[0], 10);
-              return bookYear === year;
-            }
-
-            return false;
-          });
-
-        this.filteredBooks.set(filteredByYear);
-
-        break;
-
-      case 'publisher':
-        const filteredByPublisher = this.books()
-          .filter((book) => {
-            const publisher = (book.publisher ?? '').toLowerCase();
-            return publisher === value.toLowerCase();
-          });
-
-        this.filteredBooks.set(filteredByPublisher);
-
-        break;
-
-      case 'rating':        
-        const target = Number.parseInt(value, 10);
-        if (Number.isNaN(target)) {
-          this.filteredBooks.set(this.books());
-          return;
-        }
-        
-        this.filteredBooks.set(
-          this.books()
-            .filter((book) =>
-              Math.max(0, Math.min(5, Math.floor(book.averageRating ?? 0))) >= target
-            )
-        );
- 
-         break;
-
-      default:
-
-        break;
+  /**
+   * Remove a specific filter type.
+   */
+  removeFilter(type: FilterType): void {
+    const current = new Map(this.activeFilters());
+    if (current.delete(type)) {
+      this.activeFilters.set(current);
+      this.hasFilter.set(current.size > 0);
     }
+  }
+
+  /**
+   * Clear all active filters.
+   */
+  clearFilters(): void {
+    this.activeFilters.set(new Map<FilterType, string>());
+    this.hasFilter.set(false);
   }
 
   /**
