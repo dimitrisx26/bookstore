@@ -16,7 +16,7 @@ export interface IBook {
   /**
    * Optional subtitle.
    */
-  subtitle: string;
+  subtitle?: string;
 
   /**
    * One or more authors.
@@ -71,6 +71,6 @@ export interface IBook {
   /**
    * Common identifiers.
    */
-  isbn10: string;
-  isbn13: string;
+  isbn10?: string;
+  isbn13?: string;
 }

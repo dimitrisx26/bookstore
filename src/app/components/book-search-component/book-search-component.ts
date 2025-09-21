@@ -2,6 +2,8 @@ import { Component, inject, Signal } from "@angular/core";
 import { IBook } from "../../models/book.model";
 import { BooksSearchService } from "../../services/books-search-service";
 
+export type FilterType = 'category' | 'year' | 'publisher' | 'rating';
+
 @Component({
   selector: "app-book-search-component",
   imports: [],
@@ -23,7 +25,16 @@ export class BookSearchComponent {
    * Loading state signal from the service.
    */
   readonly loading: Signal<boolean> = this.search.getLoadingSignal();
-  
+
+  /**
+   * Filter change handler.
+   * @param type The type of filter (e.g., 'category', 'year', 'publisher', 'rating').
+   * @param value The value of the filter.
+   */
+  onFilterChange(type: FilterType, event: any): void {
+    this.search.applyFilter(type, event.target.value);
+  }
+
   /**
    * Search books based on the query.
    */

@@ -8,6 +8,7 @@ import {
 } from '@angular/core';
 import { IBook } from '../models/book.model';
 import { BooksApiService } from './books-api-service';
+import { FilterType } from '../components/book-search-component/book-search-component';
 
 @Injectable({
   providedIn: 'root',
@@ -92,6 +93,82 @@ export class BooksSearchService {
       });
 
     this.filteredBooks.set(filtered);
+  }
+
+  /**
+   *  Apply a filter to the list of books.
+   * 
+   * @param type The type of filter
+   * @param value The value of the filter
+   */
+  applyFilter(type: FilterType, value: string): void {
+    if (value === 'all') {
+      this.filteredBooks.set(this.books());
+      return;
+    }
+
+    switch (type) {
+      case 'category':
+        const filteredByCategory = this.books()
+          .filter((book) => {
+            const categories = book.categories ?? [];
+            return categories.includes(value);
+          });
+
+        this.filteredBooks.set(filteredByCategory);
+
+        break;
+
+      case 'year':
+        const year = parseInt(value, 10);
+
+        const filteredByYear = this.books()
+          .filter((book) => {
+            const publishedDate = book.year ?? 0;
+            const match = publishedDate.toString().match(/\d{4}/);
+            if (match) {
+              const bookYear = parseInt(match[0], 10);
+              return bookYear === year;
+            }
+
+            return false;
+          });
+
+        this.filteredBooks.set(filteredByYear);
+
+        break;
+
+      case 'publisher':
+        const filteredByPublisher = this.books()
+          .filter((book) => {
+            const publisher = (book.publisher ?? '').toLowerCase();
+            return publisher === value.toLowerCase();
+          });
+
+        this.filteredBooks.set(filteredByPublisher);
+
+        break;
+
+      case 'rating':        
+        const target = Number.parseInt(value, 10);
+        if (Number.isNaN(target)) {
+          this.filteredBooks.set(this.books());
+          return;
+        }
+        
+        this.filteredBooks.set(
+          this.books()
+            .filter((book) =>
+              Math.max(0, Math.min(5, Math.floor(book.averageRating ?? 0))) >= target
+            )
+        );
+ 
+         break;
+
+      default:
+
+        break;
+    }
   }
 
   /**

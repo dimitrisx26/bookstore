@@ -13,7 +13,7 @@
       "imageUrl": "https://eloquentjavascript.net/img/cover.jpg",
       "website": "http://eloquentjavascript.net/",
       "categories": ["Programming", "JavaScript"],
-      "averageRating": 4.5,
+      "averageRating": 3.5,
       "year": 2018
     },
     {
@@ -77,7 +77,7 @@
       "imageUrl": "https://m.media-amazon.com/images/I/81LpyFBbo8L._SL1500_.jpg",
       "website": "http://www.addyosmani.com/resources/essentialjsdesignpatterns/book/",
       "categories": ["Programming", "JavaScript", "Design Patterns"],
-      "averageRating": 4.4,
+      "averageRating": 2.4,
       "year": 2012
     },
     {
@@ -93,7 +93,7 @@
       "imageUrl": "https://raw.githubusercontent.com/getify/You-Dont-Know-JS/2nd-ed/get-started/images/cover.png",
       "website": "https://github.com/getify/You-Dont-Know-JS/tree/2nd-ed/get-started",
       "categories": ["Programming", "JavaScript", "Advanced"],
-      "averageRating": 4.8,
+      "averageRating": 1.8,
       "year": 2020
     },
     {
