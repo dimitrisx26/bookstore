@@ -1,3 +1,179 @@
-<div class="container py-5 text-center">
+<div class="container py-5">
+  <!-- Loading state -->
+  @if (loading()) {
+  <div class="text-center py-5">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p class="text-muted mt-3">Loading book details…</p>
+  </div>
+  }
+
+  @else {
+  <!-- Error state -->
+  @if (error()) {
+  <div class="text-center py-5">
+    <div class="card border-0 rounded-4 shadow-sm bg-light mx-auto" style="max-width: 640px;">
+      <div class="card-body p-5">
+        <div class="text-danger mb-3"><i class="bi bi-exclamation-triangle-fill fs-1"></i></div>
+        <h4 class="fw-semibold">Something went wrong</h4>
+        <p class="text-muted mb-4">{{ error() }}</p>
+        <div class="d-flex gap-3 justify-content-center">
+          <button class="btn btn-primary rounded-pill px-4" (click)="goBack()">
+            <i class="bi bi-arrow-left me-2"></i> Back
+          </button>
+          <button class="btn btn-outline-secondary rounded-pill px-4" (click)="searchBooks()">
+            <i class="bi bi-search me-2"></i> Browse
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
+
+  @else {
   <!-- Book details -->
+  @if (book(); as bookData) {
+  <div class="row g-4">
+    <!-- Left: cover + quick actions -->
+    <aside class="col-12 col-md-4 col-lg-3">
+      <div class="card rounded-4 shadow-sm mb-3 sticky-top" style="top: 84px;">
+        <div class="ratio" style="--bs-aspect-ratio: 75%">
+          @if (bookData.imageUrl && !imageError()) {
+          <img [src]="bookData.imageUrl" [alt]="bookData.title + ' cover'" class="img-fluid p-3"
+            style="object-fit: contain; max-height:100%; width:auto;" loading="lazy" (error)="onImageError()"
+            (load)="onImageLoad($event)" />
+          } @else {
+          <div class="d-flex align-items-center justify-content-center h-100 bg-light">
+            <i class="bi bi-book display-4 text-muted"></i>
+          </div>
+          }
+        </div>
+        <div class="card-body text-center">
+          <button class="btn btn-outline-primary w-100 rounded-pill mb-2" (click)="goBack()">
+            <i class="bi bi-arrow-left me-2"></i> Back
+          </button>
+          @if (bookData.website) {
+          <a [href]="bookData.website" target="_blank" rel="noopener" class="btn btn-primary w-100 rounded-pill">
+            <i class="bi bi-globe me-2"></i> Visit Website
+          </a>
+          }
+        </div>
+      </div>
+      <div class="d-none d-md-block">
+        <div class="card border-0 mt-3">
+          <div class="card-body small text-muted text-center">
+            <div>ISBN-13: <strong>{{ bookData.isbn13 || '-' }}</strong></div>
+            <div>ISBN-10: <strong>{{ bookData.isbn10 || '-' }}</strong></div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right: main info -->
+    <main class="col-12 col-md-8 col-lg-9">
+      <div class="d-flex flex-column flex-sm-row justify-content-between align-items-start gap-3 mb-3">
+        <div>
+          <h1 class="display-6 fw-bold mb-1">{{ bookData.title }}</h1>
+          @if (bookData.subtitle) {
+          <h2 class="h6 text-muted fw-normal mb-2">{{ bookData.subtitle }}</h2>
+          }
+          <div class="text-muted small">
+            @if (authorsText()) {
+            <span>By {{ authorsText() }}</span>
+            }
+          </div>
+        </div>
+
+        <div class="d-flex gap-2 align-items-center">
+          <div class="text-center">
+            <div class="fs-5 mb-1">
+              @for (state of ratingStars(); track state) {
+              @if (state === 'full') {
+              <i class="bi bi-star-fill text-warning"></i>
+              } @else if (state === 'half') {
+              <i class="bi bi-star-half text-warning"></i>
+              } @else {
+              <i class="bi bi-star text-warning"></i>
+              }
+              }
+            </div>
+            <div class="badge bg-primary text-white rounded-pill px-3">{{ bookData.averageRating || 'N/A' }}</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3 mb-4">
+        <div class="col-6 col-sm-4 col-lg-3">
+          <div class="card border-0 rounded-3 bg-light h-100">
+            <div class="card-body p-2 text-secondary small">Publisher<div class="fw-semibold">{{ bookData.publisher ||
+                '-' }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-sm-4 col-lg-3">
+          <div class="card border-0 rounded-3 bg-light h-100">
+            <div class="card-body p-2 text-secondary small">Published<div class="fw-semibold">{{ bookData.published |
+                date:'mediumDate' }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-sm-4 col-lg-3">
+          <div class="card border-0 rounded-3 bg-light h-100">
+            <div class="card-body p-2 text-secondary small">Pages<div class="fw-semibold">{{ bookData.pages || '-' }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6 col-sm-4 col-lg-3">
+          <div class="card border-0 rounded-3 bg-light h-100">
+            <div class="card-body p-2 text-secondary small">Year<div class="fw-semibold">{{ bookData.year || '-' }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="h6 fw-semibold mb-2">Categories</h3>
+        <div class="d-flex flex-wrap gap-2">
+          @if (bookData.categories && bookData.categories.length) {
+          @for (cat of bookData.categories; track cat) {
+          <span class="badge bg-secondary text-white rounded-pill py-1 px-3">{{ cat }}</span>
+          }
+          } @else {
+          <span class="text-muted small">Uncategorized</span>
+          }
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="h6 fw-semibold mb-2">Description</h3>
+        <div class="card border-0 rounded-3 shadow-sm bg-light">
+          <div class="card-body">
+            @if (bookData.description) {
+            <p class="text-muted mb-2" [class.collapsed]="!showFullDescription()">
+              {{ showFullDescription() ? bookData.description : (bookData.description | slice:0:280) +
+              (bookData.description.length > 280 ? '…' : '') }}
+            </p>
+            @if (bookData.description.length > 280) {
+            <button class="btn btn-link p-0" (click)="toggleDescription()">
+              {{ showFullDescription() ? 'Show less' : 'Read more' }}
+            </button>
+            }
+            } @else {
+            <p class="text-muted small mb-0">No description available.</p>
+            }
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+  } @else {
+  <div class="text-center py-5">
+    <p class="text-muted">No book selected.</p>
+  </div>
+  }
+  }
+  }
 </div>

@@ -1,4 +1,5 @@
 import { Component, inject, Signal } from "@angular/core";
+import { Router } from "@angular/router";
 import { IBook } from "../../models/book.model";
 import { BooksSearchService } from "../../services/books-search-service";
 
@@ -15,6 +16,11 @@ export class BookSearchComponent {
    * Search service instance.
    */
   private search: BooksSearchService = inject(BooksSearchService);
+
+  /**
+   * Router instance for navigation.
+   */
+  private router = inject(Router);
 
   /**
    * Signal of the list of books returned from the search service.
@@ -48,5 +54,13 @@ export class BookSearchComponent {
    */
   onSearch(query: string): void {    
     this.search.searchBooks(query);
+  }
+
+  /**
+   * Navigate to book details page.
+   * @param bookId The ID of the book to view details for
+   */
+  viewBookDetails(bookId: number): void {
+    this.router.navigate(['/book/details', bookId]);
   }
 }

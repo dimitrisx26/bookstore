@@ -29,6 +29,21 @@
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
 }
 
+.clickable-card {
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clickable-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.clickable-card:focus {
+  outline: 2px solid var(--bs-primary);
+  outline-offset: 2px;
+}
+
 .ratio img {
   width: 100%;
   height: 100%;

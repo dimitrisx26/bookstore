@@ -108,7 +108,13 @@
             <div class="col-12 col-sm-6 col-md-4 col-lg-3">
               <!-- Book card -->
               <div
-                class="card book-card border-0 rounded-4 shadow-sm h-100 d-flex flex-column"
+                class="card book-card border-0 rounded-4 shadow-sm h-100 d-flex flex-column clickable-card"
+                (click)="viewBookDetails(book.id)"
+                role="button"
+                tabindex="0"
+                [attr.aria-label]="'View details for ' + book.title"
+                (keydown.enter)="viewBookDetails(book.id)"
+                (keydown.space)="viewBookDetails(book.id)"
               >
                 <!-- Card image -->
                 <div
