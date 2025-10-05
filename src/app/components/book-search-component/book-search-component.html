@@ -11,12 +11,13 @@
     <div class="col-md-6">
       <div class="search-container">
         <input
+          #searchInput
           id="search-input"
           name="search"
           type="text"
           class="form-control search-input"
           placeholder="Search..."
-          (input)="onSearch($event.target.value)"
+          (input)="onSearch(searchInput.value)"
         />
         <i class="bi bi-search search-icon"></i>
       </div>
