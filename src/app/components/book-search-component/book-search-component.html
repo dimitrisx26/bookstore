@@ -8,22 +8,38 @@
 
   <!-- Search input -->
   <div class="row justify-content-center">
-    <div class="col-md-6">
-      <div class="search-container">
+    <div class="col-md-8 d-flex align-items-center gap-3">
+      <div class="search-container d-flex flex-grow-1">
         <input
           #searchInput
           id="search-input"
           name="search"
           type="text"
-          class="form-control search-input"
+          class="form-control search-input flex-grow-1"
           placeholder="Search..."
           (input)="onSearch(searchInput.value)"
         />
         <i class="bi bi-search search-icon"></i>
       </div>
+      <!-- END Search input -->
+
+      <!-- Add modal button opener -->
+      <button
+        aria-label="Add a new book"
+        class="btn btn-primary rounded-4 p-2 flex-shrink-0 d-inline-flex"
+        data-bs-toggle="modal"
+        data-bs-target="#addModal"
+        style="min-width: 0; width: auto;"
+      >
+        <i
+          class="bi bi-plus-lg me-2"
+          aria-hidden="true"
+        ></i>
+        Add Book
+      </button>
+      <!-- END Add modal button opener -->
     </div>
   </div>
-  <!-- END Search input -->
 
   <!-- Filters -->
   <form class="container mt-4" role="search" aria-label="Book filters">
@@ -227,3 +243,7 @@
   </div>
   <!-- END Results -->
 </div>
+
+<!-- Add Book Modal -->
+<app-book-create-component></app-book-create-component>
+<!-- End Add Book Modal -->

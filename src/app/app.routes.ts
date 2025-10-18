@@ -23,13 +23,6 @@ export const routes: Routes = [
       ),
   },
   {
-    path: "book/add",
-    loadComponent: () =>
-      import("./components/book-create-component/book-create-component").then(
-        (m) => m.BookCreateComponent,
-      ),
-  },
-  {
     path: "book/details/:id",
     loadComponent: () =>
       import("./components/book-details-component/book-details-component").then(

@@ -2,12 +2,13 @@ import { Component, inject, Signal } from "@angular/core";
 import { Router } from "@angular/router";
 import { IBook } from "../../models/book.model";
 import { BooksSearchService } from "../../services/books-search-service";
+import { BookCreateComponent } from "../book-create-component/book-create-component";
 
 export type FilterType = 'category' | 'year' | 'publisher' | 'rating';
 
 @Component({
   selector: "app-book-search-component",
-  imports: [],
+  imports: [BookCreateComponent],
   templateUrl: "./book-search-component.html",
   styleUrl: "./book-search-component.css",
 })
@@ -38,7 +39,6 @@ export class BookSearchComponent {
   readonly categories: Signal<string[]> = this.search.getCategoriesSignal();
   readonly years: Signal<number[]> = this.search.getYearsSignal()
   readonly publishers: Signal<string[]> = this.search.getPublishersSignal()
-
 
   /**
    * Filter change handler.

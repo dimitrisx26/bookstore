@@ -24,11 +24,6 @@ export interface IBook {
   authors: string[];
 
   /**
-   * Date published.
-   */
-  published: string;
-
-  /**
    * Publisher name.
    */
   publisher: string;
