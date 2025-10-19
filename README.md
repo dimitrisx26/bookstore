@@ -1,107 +1,98 @@
-# Bookstore
+# Bookstore — Angular Demo
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.1.4.
+This is a small demo BookStore application built with Angular (CLI v20.x). It showcases searching, filtering, viewing details, and a minimal Add Book flow that persists demo entries into localStorage for the current browser.
 
-## Development server
+This README provides a clear quick-start, common commands, project layout, implementation notes, and troubleshooting tips so you can run and contribute to the project quickly.
 
-To start a local development server, run:
-
-```bash
-ng serve
-```
-
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
-
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-# Bookstore (Angular demo)
-
-A small demo BookStore application built with Angular and Bootstrap. It includes searching, filtering, viewing details, and a minimal Add Book flow that persists demo entries into localStorage for the current browser.
-
-This README covers getting started, running the app locally, and a few implementation notes specific to this repo.
-
-Table of contents
+## Table of contents
 
 - Requirements
 - Quick start
-- Useful commands
+- Commands
 - Project structure
-- Notable implementation details
+- Implementation notes
+- Testing
 - Troubleshooting
 
 ## Requirements
 
-- Node.js 18+ (or the Node version used in the project)
-- npm or pnpm (the repo uses the standard Angular CLI toolchain)
-- Angular CLI (optional for running `ng` commands globally)
+- Node.js 18+ (or the Node version used in your environment)
+- npm (or pnpm/yarn) — this project uses the standard Angular CLI toolchain
+- Angular CLI (optional; you can use the local CLI via npm scripts)
 
 ## Quick start
 
-1.  Install dependencies:
+1. Install dependencies
 
 ```bash
 npm install
 ```
 
-2.  Start the dev server:
+2. Start the dev server (uses the `start` npm script)
 
 ```bash
 npm start
-# or
-# ng serve
+# or, to use the Angular CLI directly:
+# npx ng serve
 ```
 
-3.  Open http://localhost:4200/ in your browser.
+3. Open the app in your browser:
 
-The app uses `public/assets/books.json` as a seed dataset. Added books from the Add Book modal are saved to localStorage in the current browser.
+http://localhost:4200/
 
-## Useful commands
+Notes:
+- The app seeds demo books from `public/assets/books.json` on first load.
+- Books you add using the Add Book flow are stored in the browser's localStorage for the current origin.
 
-- `npm start` / `ng serve` — run dev server
-- `npm run build` / `ng build` — create production build
-- `npm test` / `ng test` — run unit tests
-- `npm run lint` / `ng lint` — run linter (if configured)
+## Commands
+
+- npm start — run development server (dev build + live reload)
+- npm run build — create a production build
+- npm test — run unit tests
+- npm run lint — run linter (if configured in the project)
+
+Run the local Angular CLI without a global install with:
+
+```bash
+npx ng <command>
+```
 
 ## Project structure (important files)
 
-- `src/app/components` — UI components (search, details, create modal, landing, etc.)
-- `src/app/services` — API/local storage services and search/filter logic
-- `public/assets/books.json` — seed book dataset used by the demo
-- `src/app/models/book.model.ts` — IBook interface
+- `src/app/` — application source
+	- `components/` — UI components (search, details, create modal, landing, header/footer)
+	- `models/` — domain models (e.g. `book.model.ts`)
+	- `services/` — services for API/localStorage/search logic
+- `public/assets/books.json` — seed dataset for demo books
+- `src/main.ts`, `src/index.html` — Angular bootstrap and index
 
-## Notable implementation details
+Tip: The codebase prefers small, focused components and keeps state/logic in services to make the app easy to test.
 
-- Authors and categories in the Create form now use `FormArray` and a tag/chip UI so newly-created books store arrays (not comma strings). This avoids runtime errors when the search/filter code expects arrays.
-- The search service includes defensive parsing to handle older or external entries where `categories` or `authors` may be strings; that code can be simplified if you ensure all inputs always provide arrays.
-- The landing page was improved with a hero and feature cards; it uses an Unsplash placeholder image for the hero so you don't need to add an asset locally.
+## Implementation notes
+
+- Form arrays: The Create form stores `authors` and `categories` as arrays (FormArray + tag/chip UI). This avoids runtime issues when other parts of the app expect arrays.
+- Defensive parsing: The search service includes guards to handle older data where `authors` or `categories` might be strings; if you ensure all inputs store arrays you can simplify that code.
+- Images: The landing hero currently uses an external Unsplash placeholder image. If you want to avoid external requests, consider replacing it with an inline SVG or local image.
+
+## Testing
+
+- Unit tests are wired to the standard Angular test runner. Run them with:
+
+```bash
+npm test
+```
+
+- The repo includes specs for components and services under `src/app/` alongside the implementation.
 
 ## Troubleshooting
 
-- Runtime error "(book.categories ?? []).forEach is not a function": ensure that books saved to localStorage have `categories` as an array. The Create form uses FormArray so new entries will be arrays. The search service also guards against string values.
-- If you see template errors after edits, run `ng serve` and check the terminal; Angular's build tools will print template parsing errors and helpful locations.
+- Error: `(book.categories ?? []).forEach is not a function`
+	- Cause: Some book entries (from localStorage or external sources) have `categories` as a string rather than an array.
+	- Fix: Ensure saved books use arrays for `categories` and `authors`. The Create form already saves arrays; the search service also contains parsing guards.
 
-## Contributing
-
-Small, focused PRs are welcome. When adding features, prefer small components and keep logic in services where possible.
+- Template or compilation errors
+	- Run `npm start` and inspect the terminal; Angular's compiler provides helpful template parsing errors with file/line references.
 
 ---
 
-If you'd like, I can:
-
-- Add a small CONTRIBUTING.md and code style/linting setup
-- Add unit tests for the Create form and BooksSearchService
-- Replace the Unsplash hero with an inline SVG placeholder to avoid external requests
-
-Tell me what you'd prefer and I can add it.
+Last updated: 2025-10-19
