@@ -172,7 +172,7 @@
 
                   <!-- Categories -->
                   <div class="mb-2 categories-preview">
-                    @if (book.categories && book.categories.length) {
+                    @if (book.categories && book.categories.length && typeof book.categories !== 'string' ) {
                       @for (category of book.categories.slice(0,2); track category) {
                         <span
                           class="badge bg-secondary small py-1 px-2 me-1 text-truncate"
@@ -193,7 +193,7 @@
                         </details>
                       }
                     } @else {
-                      <span class="badge bg-secondary small py-1 px-2" title="Uncategorized">Uncategorized</span>
+                      <span class="badge bg-secondary small py-1 px-2" title="Category">{{ book.categories || 'Uncategorized' }}</span>
                     }
                   </div>
                   <!-- END Categories -->
