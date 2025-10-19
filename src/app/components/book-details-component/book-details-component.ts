@@ -35,8 +35,6 @@ export class BookDetailsComponent implements OnInit {
   readonly loading = signal<boolean>(false);
   readonly error = signal<string | null>(null);
   readonly imageError = signal<boolean>(false);
-  // store an explicit pixel width for small images so we can render them at
-  // their intrinsic size and avoid upscaling. Null means "no explicit width".
   readonly imageWidth = signal<number | null>(null);
   readonly invalidId = signal<boolean>(false);
   readonly bookId = signal<string | null>(null);
@@ -63,8 +61,6 @@ export class BookDetailsComponent implements OnInit {
   });
 
   ngOnInit(): void {
-    // Scroll to top using Angular's ViewportScroller so the router's
-    // scroll restoration and platform behavior are respected.
     requestAnimationFrame(() => this.viewport.scrollToPosition([0, 0]));
     const bookId = this.route.snapshot.paramMap.get('id');
     this.bookId.set(bookId);
