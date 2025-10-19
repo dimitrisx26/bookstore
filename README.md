@@ -25,35 +25,73 @@ For a complete list of available schematics (such as `components`, `directives`,
 ```bash
 ng generate --help
 ```
+ # Bookstore (Angular demo)
 
-## Building
+ A small demo BookStore application built with Angular and Bootstrap. It includes searching, filtering, viewing details, and a minimal Add Book flow that persists demo entries into localStorage for the current browser.
 
-To build the project run:
+ This README covers getting started, running the app locally, and a few implementation notes specific to this repo.
 
-```bash
-ng build
-```
+ Table of contents
+ - Requirements
+ - Quick start
+ - Useful commands
+ - Project structure
+ - Notable implementation details
+ - Troubleshooting
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+ ## Requirements
+ - Node.js 18+ (or the Node version used in the project)
+ - npm or pnpm (the repo uses the standard Angular CLI toolchain)
+ - Angular CLI (optional for running `ng` commands globally)
 
-## Running unit tests
+ ## Quick start
+ 1. Install dependencies:
 
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
+ ```bash
+ npm install
+ ```
 
-```bash
-ng test
-```
+ 2. Start the dev server:
 
-## Running end-to-end tests
+ ```bash
+ npm start
+ # or
+ # ng serve
+ ```
 
-For end-to-end (e2e) testing, run:
+ 3. Open http://localhost:4200/ in your browser.
 
-```bash
-ng e2e
-```
+ The app uses `public/assets/books.json` as a seed dataset. Added books from the Add Book modal are saved to localStorage in the current browser.
 
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
+ ## Useful commands
+ - `npm start` / `ng serve` — run dev server
+ - `npm run build` / `ng build` — create production build
+ - `npm test` / `ng test` — run unit tests
+ - `npm run lint` / `ng lint` — run linter (if configured)
 
-## Additional Resources
+ ## Project structure (important files)
+ - `src/app/components` — UI components (search, details, create modal, landing, etc.)
+ - `src/app/services` — API/local storage services and search/filter logic
+ - `public/assets/books.json` — seed book dataset used by the demo
+ - `src/app/models/book.model.ts` — IBook interface
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+ ## Notable implementation details
+ - Authors and categories in the Create form now use `FormArray` and a tag/chip UI so newly-created books store arrays (not comma strings). This avoids runtime errors when the search/filter code expects arrays.
+ - The search service includes defensive parsing to handle older or external entries where `categories` or `authors` may be strings; that code can be simplified if you ensure all inputs always provide arrays.
+ - The landing page was improved with a hero and feature cards; it uses an Unsplash placeholder image for the hero so you don't need to add an asset locally.
+
+ ## Troubleshooting
+ - Runtime error "(book.categories ?? []).forEach is not a function": ensure that books saved to localStorage have `categories` as an array. The Create form uses FormArray so new entries will be arrays. The search service also guards against string values.
+ - If you see template errors after edits, run `ng serve` and check the terminal; Angular's build tools will print template parsing errors and helpful locations.
+
+ ## Contributing
+ Small, focused PRs are welcome. When adding features, prefer small components and keep logic in services where possible.
+
+ ---
+
+ If you'd like, I can:
+ - Add a small CONTRIBUTING.md and code style/linting setup
+ - Add unit tests for the Create form and BooksSearchService
+ - Replace the Unsplash hero with an inline SVG placeholder to avoid external requests
+
+ Tell me what you'd prefer and I can add it.

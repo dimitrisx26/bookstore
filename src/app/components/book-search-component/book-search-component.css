@@ -1,147 +1,149 @@
 .search-container {
-  position: relative;
+	position: relative;
 }
 
 .search-input {
-  height: 50px;
-  border-radius: 30px;
-  padding-left: 35px;
-  border: none;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
+	height: 50px;
+	border-radius: 30px;
+	padding-left: 35px;
+	border: none;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.08);
 }
 
 .search-icon {
-  position: absolute;
-  top: 50%;
-  left: 15px;
-  transform: translateY(-50%);
-  color: #888;
+	position: absolute;
+	top: 50%;
+	left: 15px;
+	transform: translateY(-50%);
+	color: #888;
 }
 
 .book-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden;
-  cursor: pointer;
+	transition:
+		transform 0.2s ease,
+		box-shadow 0.2s ease;
+	overflow: hidden;
+	cursor: pointer;
 }
 
 .book-card:hover {
-  transform: translateY(-6px) scale(1.002);
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
+	transform: translateY(-6px) scale(1.002);
+	box-shadow: 0 12px 28px rgba(0, 0, 0, 0.09);
 }
 
 .clickable-card {
-  cursor: pointer;
-  transition: all 0.2s ease;
+	cursor: pointer;
+	transition: all 0.2s ease;
 }
 
 .clickable-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+	transform: translateY(-4px);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
 }
 
 .clickable-card:focus {
-  outline: 2px solid var(--bs-primary);
-  outline-offset: 2px;
+	outline: 2px solid var(--bs-primary);
+	outline-offset: 2px;
 }
 
 .ratio img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
-  display: block;
-  padding: 0.5rem;
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+	object-position: center;
+	display: block;
+	padding: 0.5rem;
 }
 
 .ratio {
-  --aspect: 75%;
-  position: relative;
-  padding-top: calc(var(--aspect));
+	--aspect: 75%;
+	position: relative;
+	padding-top: calc(var(--aspect));
 }
 
 .ratio img {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
-  display: block;
-  padding: 0.5rem;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	max-width: 100%;
+	max-height: 100%;
+	object-fit: contain;
+	display: block;
+	padding: 0.5rem;
 }
 
 .book-card .card-body {
-  padding: 0.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
+	padding: 0.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
 }
 .book-card .card-body {
-  padding: 0.75rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  min-height: 160px;
+	padding: 0.75rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+	min-height: 160px;
 }
 
 .book-card .badge {
-  font-size: 0.72rem;
-  padding: 0.25rem 0.5rem;
+	font-size: 0.72rem;
+	padding: 0.25rem 0.5rem;
 }
 .book-card .badge {
-  font-size: 0.72rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+	font-size: 0.72rem;
+	padding: 0.25rem 0.5rem;
+	border-radius: 0.5rem;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
 .categories-preview {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  flex-wrap: wrap;
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+	flex-wrap: wrap;
 }
 
 .categories-details {
-  border: none;
-  background: transparent;
-  padding: 0;
-  margin: 0;
+	border: none;
+	background: transparent;
+	padding: 0;
+	margin: 0;
 }
 
 .categories-summary {
-  cursor: pointer;
-  color: #444;
-  font-size: 0.8rem;
-  margin-left: 0.25rem;
-  list-style: none;
+	cursor: pointer;
+	color: #444;
+	font-size: 0.8rem;
+	margin-left: 0.25rem;
+	list-style: none;
 }
 
 .categories-details[open] .categories-summary {
-  font-weight: 600;
+	font-weight: 600;
 }
 
 .categories-summary:hover,
 .categories-summary:focus {
-  text-decoration: underline;
-  outline: none;
+	text-decoration: underline;
+	outline: none;
 }
 
 .badge.bg-secondary {
-  background-color: #6c757d;
-  opacity: 0.9;
+	background-color: #6c757d;
+	opacity: 0.9;
 }
 
 .rating i {
-  line-height: 1;
+	line-height: 1;
 }
 
 .rating {
-  font-size: 1rem;
-  color: #2c3e50;
-  display: inline-flex;
-  gap: 0.125rem;
+	font-size: 1rem;
+	color: #2c3e50;
+	display: inline-flex;
+	gap: 0.125rem;
 }

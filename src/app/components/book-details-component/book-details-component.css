@@ -1,108 +1,108 @@
 .btn {
-  transition: all 0.2s ease;
+	transition: all 0.2s ease;
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+	transform: translateY(-1px);
+	box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
 .spinner-border {
-  width: 3rem;
-  height: 3rem;
+	width: 3rem;
+	height: 3rem;
 }
 
 .book-cover-sticky {
-  position: sticky;
-  top: 7rem;
-  z-index: 1020;
+	position: sticky;
+	top: 7rem;
+	z-index: 1020;
 }
 
 @media (max-width: 767.98px) {
-  .book-cover-sticky {
-    position: static;
-    margin-bottom: 2rem;
-  }
+	.book-cover-sticky {
+		position: static;
+		margin-bottom: 2rem;
+	}
 }
 
 .btn-sm:hover {
-  transform: translateY(-1px);
-  transition: all 0.2s ease;
+	transform: translateY(-1px);
+	transition: all 0.2s ease;
 }
 
 .text-danger i {
-  animation: pulse-error 2s infinite;
+	animation: pulse-error 2s infinite;
 }
 
 .badge {
-  font-size: 0.72rem;
-  padding: 0.25rem 0.5rem;
-  border-radius: 0.5rem;
+	font-size: 0.72rem;
+	padding: 0.25rem 0.5rem;
+	border-radius: 0.5rem;
 }
 
 .bi-star-fill,
 .bi-star-half,
 .bi-star {
-  font-size: 1rem;
+	font-size: 1rem;
 }
 
 /* Simple image styling */
 .book-cover-sticky img {
-  max-width: 100%;
-  height: auto;
-  display: block;
+	max-width: 100%;
+	height: auto;
+	display: block;
 }
 
 /* Prevent upscaling of low-resolution covers. If the image is detected
    as small we allow it to render at its intrinsic size and center it. */
 .book-cover-image {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  max-width: 100%;
-  height: auto;
-  object-fit: contain;
-  /* If an explicit inline width is applied (from the component), allow it
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: 100%;
+	height: auto;
+	object-fit: contain;
+	/* If an explicit inline width is applied (from the component), allow it
      to take precedence so the browser will render the image at intrinsic
      pixels rather than stretching it to the container. */
-  width: auto;
+	width: auto;
 }
 
 /* Cover box ensures all images display at the same visual size.
    We use a 3:4 aspect ratio (typical book cover) and object-fit: cover
    to keep a consistent presentation across different image sizes. */
 .cover-box {
-  width: 100%;
-  aspect-ratio: 3 / 4;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #f8f9fa;
+	width: 100%;
+	aspect-ratio: 3 / 4;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: #f8f9fa;
 }
 
 .cover-box .book-cover-image {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center center;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center center;
 }
 
 /* Rating stars spacing */
 .fs-5 i {
-  margin-right: 0.12rem;
+	margin-right: 0.12rem;
 }
 
 /* Collapsed description: limit lines visually on larger viewports */
 .collapsed {
-  display: -webkit-box;
-  -webkit-line-clamp: 5;
-  line-clamp: 5;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+	display: -webkit-box;
+	-webkit-line-clamp: 5;
+	line-clamp: 5;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
 }
 
 /* Sticky card slight shadow and padding for visual separation */
 .card.rounded-4.sticky-top {
-  padding-bottom: 0.25rem;
+	padding-bottom: 0.25rem;
 }

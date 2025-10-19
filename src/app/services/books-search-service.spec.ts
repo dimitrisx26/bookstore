@@ -1,16 +1,16 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { BooksSearchService } from './books-search-service';
+import { BooksSearchService } from "./books-search-service";
 
-describe('BooksSearchService', () => {
-  let service: BooksSearchService;
+describe("BooksSearchService", () => {
+	let service: BooksSearchService;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(BooksSearchService);
-  });
+	beforeEach(() => {
+		TestBed.configureTestingModule({});
+		service = TestBed.inject(BooksSearchService);
+	});
 
-  it('should be created', () => {
-    expect(service).toBeTruthy();
-  });
+	it("should be created", () => {
+		expect(service).toBeTruthy();
+	});
 });
