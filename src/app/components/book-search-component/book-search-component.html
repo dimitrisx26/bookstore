@@ -48,7 +48,7 @@
         <label class="visually-hidden" for="category-filter">Category</label>
         <div class="input-group">
           <span class="input-group-text d-flex align-items-center justify-content-center"><i class="bi bi-tags" aria-hidden="true"></i></span>
-          <select id="category-filter" name="category" class="form-select" aria-label="category filter" (change)="onFilterChange('category', $event)">
+          <select #categorySelect id="category-filter" name="category" class="form-select" aria-label="category filter" (change)="onFilterChange('category', categorySelect.value)">
             <option value="all" selected>All categories</option>
             @for (category of categories(); track category) {
               <option value="{{ category }}">{{ category }}</option>
@@ -61,7 +61,7 @@
         <label class="visually-hidden" for="year-filter">Year</label>
         <div class="input-group">
           <span class="input-group-text d-flex align-items-center justify-content-center"><i class="bi bi-calendar3" aria-hidden="true"></i></span>
-          <select id="year-filter" name="year" class="form-select" aria-label="year filter" (change)="onFilterChange('year', $event)">
+          <select #yearSelect id="year-filter" name="year" class="form-select" aria-label="year filter" (change)="onFilterChange('year', yearSelect.value)">
             <option value="all" selected>All years</option>
             @for (year of years(); track year) {
               <option value="{{ year }}">{{ year }}</option>
@@ -74,7 +74,7 @@
         <label class="visually-hidden" for="publisher-filter">Publisher</label>
         <div class="input-group">
           <span class="input-group-text d-flex align-items-center justify-content-center"><i class="bi bi-building" aria-hidden="true"></i></span>
-          <select id="publisher-filter" name="publisher" class="form-select" aria-label="publisher filter" (change)="onFilterChange('publisher', $event)">
+          <select #publisherSelect id="publisher-filter" name="publisher" class="form-select" aria-label="publisher filter" (change)="onFilterChange('publisher', publisherSelect.value)">
             <option value="all" selected>All publishers</option>
             @for (publisher of publishers(); track publisher) {
               <option value="{{ publisher }}">{{ publisher }}</option>
@@ -87,7 +87,7 @@
         <label class="visually-hidden" for="rating-filter">Rating</label>
         <div class="input-group">
           <span class="input-group-text d-flex align-items-center justify-content-center"><i class="bi bi-star" aria-hidden="true"></i></span>
-          <select id="rating-filter" name="rating" class="form-select" aria-label="rating filter" (change)="onFilterChange('rating', $event)">
+          <select #ratingSelect id="rating-filter" name="rating" class="form-select" aria-label="rating filter" (change)="onFilterChange('rating', ratingSelect.value)">
             <option value="all" selected>All ratings</option>
             <option value="1">1+</option>
             <option value="2">2+</option>

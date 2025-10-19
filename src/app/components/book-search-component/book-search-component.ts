@@ -45,8 +45,8 @@ export class BookSearchComponent {
 	 * @param type The type of filter (e.g., 'category', 'year', 'publisher', 'rating').
 	 * @param value The value of the filter.
 	 */
-	onFilterChange(type: FilterType, event: any): void {
-		this.search.applyFilter(type, event.target.value);
+	onFilterChange(type: FilterType, value: string): void {
+		this.search.applyFilter(type, value);
 	}
 
 	/**
