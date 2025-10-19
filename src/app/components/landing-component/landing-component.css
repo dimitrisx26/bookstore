@@ -47,7 +47,6 @@ p.small {
   }
 }
 
-/* Center CTAs when the layout switches to row on small+ screens */
 @media (min-width: 576px) {
   .landing-hero .d-flex.flex-column.flex-sm-row {
     justify-content: center;
